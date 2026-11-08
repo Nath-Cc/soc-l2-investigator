@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SOC L2 Investigator</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/jspdf@4.0.0/dist/jspdf.umd.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <p class="eyebrow">Comunidad Dojo · WoSEC Panamá</p>
+      <h1>SOC L2 Investigator</h1>
+      <p>Investigación de incidentes · Consultora de ciberseguridad en Estocolmo</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <p class="eyebrow">01 · Evidencia</p>
+      <h2>Cargar registros</h2>
+      <label for="file">Exportación de eventos (.xlsx)</label>
+      <input id="file" type="file" accept=".xlsx" aria-describedby="status">
+      <p id="status" class="muted" role="status">Selecciona el Excel del bootcamp.</p>
+    </section>
+
+    <!-- JavaScript muestra este bloque cuando termina el análisis. -->
+    <div id="results" hidden>
+      <section class="panel">
+        <p class="eyebrow">02 · Dashboard</p>
+        <h2>Resumen del análisis</h2>
+        <div id="metrics" class="metrics"></div>
+        <p id="period" class="muted"></p>
+        <h3>Actividad por hora registrada</h3>
+        <div id="chart" class="chart"></div>
+      </section>
+
+      <section class="panel">
+        <p class="eyebrow">03 · Investigación</p>
+        <h2>Hallazgos y evidencia</h2>
+        <div class="filters">
+          <div>
+            <label for="search">Buscar por equipo, cuenta, IP o Log_ID</label>
+            <input id="search" type="search" placeholder="Ej. EVT-00188">
+          </div>
+          <div>
+            <label for="severity">Severidad</label>
+            <select id="severity">
+              <option value="">Todas</option>
+              <option value="Alta">Alta</option>
+              <option value="Media">Media</option>
+            </select>
+          </div>
+        </div>
+        <div id="findings"></div>
+      </section>
+
+      <section class="panel">
+        <p class="eyebrow">04 · Revisión asistida</p>
+        <h2>Consultar un hallazgo con IA</h2>
+        <p class="muted">Copia la consulta a ChatGPT con los datos sintéticos del bootcamp y revisa su respuesta contra la evidencia.</p>
+
+        <label for="case">Hallazgo</label>
+        <select id="case"></select>
+
+        <label for="prompt">Consulta con evidencia</label>
+        <textarea id="prompt" rows="6" readonly></textarea>
+
+        <div class="actions">
+          <button id="copy" type="button">Copiar prompt</button>
+          <a class="button secondary" href="https://chatgpt.com/"
+             target="_blank" rel="noopener noreferrer">Abrir ChatGPT</a>
+        </div>
+        <p id="copy-status" class="muted" role="status"></p>
+
+        <label for="review">Nota de IA revisada</label>
+        <textarea id="review" rows="5" maxlength="3000"
+                  placeholder="Pega aquí la interpretación que verificaste."></textarea>
+        <label class="checkbox">
+          <input id="approve" type="checkbox" disabled>
+          Verifiqué la nota y autorizo incluirla en los informes.
+        </label>
+      </section>
+
+      <section class="panel">
+        <p class="eyebrow">05 · Entrega</p>
+        <h2>Exportar informes</h2>
+        <div class="actions">
+          <button id="executive" type="button">Descargar PDF ejecutivo</button>
+          <button id="technical" type="button" class="secondary">Descargar PDF técnico</button>
+        </div>
+        <p id="report-status" class="muted" role="status"></p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="container muted">Proyecto académico · Análisis SOC Nivel 2</footer>
+</body>
+</html>
